@@ -1,9 +1,9 @@
 library("ggplot2")
 
 
-ggplot(dfc, aes(x=CUSTOMER_PHONE, y= CUSTOMER_CITY,color = CUSTOMER_STATE)) + geom_point()
+ggplot(dfc, aes(x=as.integer(substr(CUSTOMER_PHONE,0,3)), y= CUSTOMER_CITY,color = CUSTOMER_STATE)) + geom_point()
 
-ggplot(dfo, aes(x=CUSTOMER_ID, y=ORDER_ID, color = CUSTOMER_ID)) +geom_point()
+ggplot(dfo, aes(x=CUSTOMER_ID, y=ORDER_ID, color = as.factor(CUSTOMER_ID))) +geom_point()
 
 ggplot(dfdSum, aes(x=ITEM_ID, y=TOTAL_QUANTITY)) + geom_bar(color = 'Black', fill ='#00FF00',stat= 'identity')
 
