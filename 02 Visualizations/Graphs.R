@@ -1,50 +1,16 @@
----
-title: "Project1"
-author: "Cassie &  Caleb"
-date: "Monday, February 02, 2015"
-output: html_document
----
-
-
-```{r}
-
-source("../01 Data/dataframes.R", echo = TRUE)
-
 library("ggplot2")
-library("reshape2")
-
-source("../02 Visualizations/Graphs.R", echo = TRUE)
 
 
-
-dfc
 ggplot(dfc, aes(x=CUSTOMER_PHONE, y= CUSTOMER_CITY,color = CUSTOMER_STATE)) + geom_point()
 
-dfo
-
-ggplot(dfo, aes(x=CUSTOMER_ID, y=ORDER_ID, color = as.factor(CUSTOMER_ID))) +geom_point()
-
-
-dfd
-
-
-dfdSum
+ggplot(dfo, aes(x=CUSTOMER_ID, y=ORDER_ID, color = CUSTOMER_ID)) +geom_point()
 
 ggplot(dfdSum, aes(x=ITEM_ID, y=TOTAL_QUANTITY)) + geom_bar(color = 'Black', fill ='#00FF00',stat= 'identity')
 
-
-dfi
 ggplot(dfi, aes(x=ARTIST, y=UNIT_PRICE, color = ARTIST)) + geom_point()
-
-
-
-
-dfm
 
 ggplot(dfm, aes(x=as.Date(ORDER_DATE,"%Y-%m-%d"), y=as.Date(SHIPPED_DATE, "%Y-%m-%d"), color = as.factor(UNIT_PRICE))) + geom_point() + facet_wrap(~CUSTOMER_STATE)
 
 ggplot(dfm, aes(x= as.Date(ORDER_DATE,"%Y-%m-%d"), y =as.Date(SHIPPED_DATE,"%Y-%m-%d"), color = as.factor(TITLE))) + geom_point() + facet_wrap(~CUSTOMER_STATE)
 
 ggplot(dfm, aes(x= as.Date(ORDER_DATE,"%Y-%m-%d"), y =as.Date(SHIPPED_DATE,"%Y-%m-%d"), color = as.factor(ARTIST))) + geom_point() + facet_wrap(~CUSTOMER_STATE)
-
-```
