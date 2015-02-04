@@ -1,6 +1,6 @@
 ---
 title: "Project1"
-author: "Cassie &  Caleb"
+author: "Cassie, Caleb, & Mike"
 date: "Monday, February 02, 2015"
 output: html_document
 ---
@@ -8,13 +8,13 @@ output: html_document
 
 First, we need to load the libraries "RCurl", used for processing HTTP requests, and "reshape2", used to restructure data.
 
-Next, we call the "customers" table, found using the query:
+Next, we call the customers table, found using the query:
 
 ```
 select * from customers
 ```
 
-Once we have assigned the "customers" table data to the ```dfc``` dataframe, we can view the first few rows by calling the function:
+Once we have assigned the customers table data to the ```dfc``` dataframe, we can view the first few rows by calling the function:
 
 ```
 print(head(dfc))
@@ -35,6 +35,16 @@ source("../01 Data/dfc.R", echo = TRUE)
 As we can see, there are many columns to this database: ```CUSTOMER_ID```, ```CUSTOMER_FIRST_NAME```, ```CUSTOMER_LAST_NAME```, ...
 
 Let's make a plot of this data that displays the area code versus city for each customer, coloring each point by state. It's not a particularly useful graph, but it conveys the ability of R to readily display certain data in a graphical format.
+
+Note that the ```ggplot()``` function accepts the dataframe as its first argument, followed by the  ```aes()``` function as its second argument to define aesthetics of the graph area.
+
+The call to make a scatterplot is:
+
+```
+geom_point(mapping = NULL, data = NULL, stat = "identity", position = "identity", na.rm = FALSE, ...)
+```
+
+This function is added to the ```ggplot()``` function call to define the graph as a scatterplot.
 
 The R code that creates this graph is shown below.
 
@@ -70,11 +80,25 @@ source("../01 Data/dfdSum.R", echo = TRUE)
 
 ```
 
+Now that we have the data grouped and ordered by item, we can make a bar graph showing the total quantity purchased of each item. The call to make a bar graph is:
+
+```
+geom_bar(mapping = NULL, data = NULL, stat = "bin", position = "stack", ...)
+```
+
 ```{r} 
 
 source("../02 Visualizations/dfdSumplot.R", echo = TRUE)
 
 ```
+
+Moving on to the orders table, we set the search query to:
+
+```
+select * from orders
+```
+
+We can see that the columns are ```ORDER_ID```, ```CUSTOMER_ID```, ```ORDER_DATE```, and ```SHIPPED_DATE```.
 
 ```{r}
 
@@ -82,11 +106,21 @@ source("../01 Data/dfo.R", echo = TRUE)
 
 ```
 
+From this data, we can make a scatterplot showing the ```ORDER_ID``` versus the ```CUSTOMER_ID```, with the color of each point representative of the ```CUSTOMER_ID```. The ```as.factor()``` function separates the colors into distinct groups, as shown in the legend to the right of the graph. Without this function, the colors would follow a gradient along the domain of ```CUSTOMER_ID```.
+
 ```{r}
 
 source("../02 Visualizations/dfoplot.R", echo = TRUE)
 
 ```
+
+Similarly, the search query for the items table is:
+
+```
+select * from items
+```
+
+This table has the columns ```ITEM_ID```, ```TITLE```, ```ARTIST```, and ```UNIT_PRICE```.
 
 ```{r}
 
@@ -94,17 +128,35 @@ source("../01 Data/dfi.R", echo = TRUE)
 
 ```
 
+Now, we'll make a scatterplot of the data: ```UNIT_PRICE``` versus ```ARTIST```.
+
 ```{r}
 
 source("../02 Visualizations/dfiplot.R", echo = TRUE)
 
 ```
 
+Let's find a way to aggregate the data from all four tables and make a graph that reveals something about the entire data set.
+
+We'll use the search query:
+
+```
+select * from orders o join customers c on o.customer_id = c.customer_id join order_details d on o.order_id = d.order_id join items i on d.item_id = i.item_id
+```
+
+In this query, we can see that there is the typical "select all" call in the form of ```select * from orders```. This is followed by three ```join``` clauses, which define how to connect the tables together. For instance, ```o.customer_id = c.customer_id``` joins the tables by connecting the customer ID from each table and adding the other corresponding values to each row. The same technique joins the order ID from the order_details table, and the item ID from the items table.
+
 ```{r}
 
 source("../01 Data/dfm.R", echo = TRUE)
 
 ```
+
+Finally, lets plot the ```SHIPPED_DATE``` versus the ```ORDER_DATE``` for the orders, separating the scatterplots by ```CUSTOMER_STATE```. To separate the graphical area into separate plots for each state, use the ```facet_wrap()``` function with the customer state as the argument.
+
+The ```as.Date()``` function allows the user to specify the formatting of each date as it appears on each axis.
+
+We'll create this graph three times, using ```UNIT_PRICE```, ```TITLE```, and ```ARTIST``` as the color variables, respectively.
 
 ```{r}
 
