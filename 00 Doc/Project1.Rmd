@@ -4,7 +4,23 @@ author: "Cassie &  Caleb"
 date: "Monday, February 02, 2015"
 output: html_document
 ---
+**In this project, we will document and explain the steps taken in order to take data from a database and make interesting graphs.**
 
+First, we need to load the libraries "RCurl", used for processing HTTP requests, and "reshape2", used to restructure data.
+
+Next, we call the "customers" table, found using the query:
+
+```
+select * from customers
+```
+
+Once we have assigned the "customers" table data to the ```dfc``` dataframe, we can view the first few rows by calling the function:
+
+```
+print(head(dfc))
+```
+
+These steps are shown below.
 
 ```{r}
 
@@ -12,32 +28,95 @@ output: html_document
 
 source("../01 Data/dfc.R", echo = TRUE)
 
+```
+
+**Now, let's do something fun with the data.** First, we need to load the "ggplot2" library, which is a plotting system for R.
+
+As we can see, there are many columns to this database: ```CUSTOMER_ID```, ```CUSTOMER_FIRST_NAME```, ```CUSTOMER_LAST_NAME```, ...
+
+Let's make a plot of this data that displays the area code versus city for each customer, coloring each point by state. It's not a particularly useful graph, but it conveys the ability of R to readily display certain data in a graphical format.
+
+The R code that creates this graph is shown below.
+
+```{r}
+
 source("../02 Visualizations/dfcplot.R", echo = TRUE)
+
+```
+
+Next, we'll make a dataframe from the order_details table, using the query:
+
+```
+select * from order_details
+```
+
+```{r}
 
 source("../01 Data/dfd.R", echo = TRUE)
 
+```
+
+This just has the columns ```ORDER_ID```, ```ITEM_ID```, and ```ORDER_QTY``` - not particularly exciting. Also, all but two of the ```ORDER_QTY``` rows are equal to 1. So, let's add some qualifiers to our search query to spice this data up:
+
+```
+select ITEM_ID, sum(ORDER_QTY) Total_Quantity from order_details group by ITEM_ID order by ITEM_ID
+```
+
+Here, we have ignored the ```ORDER_ID``` column and instead grouped the data by the ```ITEM_ID```, with the corresponding value equal to the total number of orders for each item - ```sum(ORDER_QTY)```.
+
+```{r}
+
 source("../01 Data/dfdSum.R", echo = TRUE)
+
+```
+
+```{r} 
 
 source("../02 Visualizations/dfdSumplot.R", echo = TRUE)
 
+```
+
+```{r}
+
 source("../01 Data/dfo.R", echo = TRUE)
+
+```
+
+```{r}
 
 source("../02 Visualizations/dfoplot.R", echo = TRUE)
 
+```
+
+```{r}
+
 source("../01 Data/dfi.R", echo = TRUE)
+
+```
+
+```{r}
 
 source("../02 Visualizations/dfiplot.R", echo = TRUE)
 
+```
+
+```{r}
+
 source("../01 Data/dfm.R", echo = TRUE)
 
+```
+
+```{r}
+
 source("../02 Visualizations/dfmplot.R", echo = TRUE)
+
+```
+
+```{r}
 
 #library("ggplot2")
 #library("reshape2")
 
 #source("../02 Visualizations/Graphs.R", echo = TRUE)
-
-
-
 
 ```
