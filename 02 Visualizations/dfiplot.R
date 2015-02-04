@@ -1,0 +1,1 @@
+ggplot(dfi, aes(x=ARTIST, y=UNIT_PRICE, color = ARTIST)) + geom_point()
