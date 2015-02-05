@@ -1,1 +1,1 @@
-ggplot(dfdSum, aes(x=ITEM_ID, y=TOTAL_QUANTITY)) + geom_bar(color = 'Black', fill ='#00FF00',stat= 'identity')
+ggplot(dfdSum, aes(x=as.factor(ITEM_ID), y=TOTAL_QUANTITY)) + geom_bar(color = 'Black', fill ='#00FF00',stat= 'identity')
